@@ -2,21 +2,21 @@ entqtt:
   client:
     protocol: 4      # MQTTv311
   connection:
-    host: 127.0.0.1 #iot.eclipse.org #localhost
+    host: localhost
     port: 1883
     keepalive: 60
   private_path: device/001
 serializer: msgpack:dumps
 deserializer: msgpack:loads
 bridge:
-  # ardrone/navdata tum_ardrone navdata
+  # ardrone/image_raw /tum_ardrone/image
   - factory: mqtt_bridge.bridge:RosToMqttBridge
     msg_type: sensor_msgs.msg:Image
     topic_from: /ardrone/image_raw
-    topic_to: imageMQTT
+    topic_to: MQTTImageTopic
   - factory: mqtt_bridge.bridge:MqttToRosBridge
     msg_type: sensor_msgs.msg:Image
-    topic_from: imageMQTT
+    topic_from: MQTTImageTopic
     topic_to: /tum_ardrone/image
   # ping pong
   - factory: mqtt_bridge.bridge:RosToMqttBridge
