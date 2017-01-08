@@ -11,22 +11,22 @@ deserializer: msgpack:loads
 bridge:
   # ping pong
   - factory: mqtt_bridge.bridge:RosToMqttBridge
-    msg_type: std_msgs.msg:Bool
-    topic_from: /ping
-    topic_to: ping
+    msg_type: sensor_msgs.msg:Image
+    topic_from: /ardrone/image_raw
+    topic_to: mqttImageTopic
   - factory: mqtt_bridge.bridge:MqttToRosBridge
-    msg_type: std_msgs.msg:Bool
-    topic_from: ping
-    topic_to: /pong
+    msg_type: sensor_msgs.msg:Image
+    topic_from: mqttImageTopic
+    topic_to: /tum_ardrone/image
   # echo back
   - factory: mqtt_bridge.bridge:RosToMqttBridge
-    msg_type: std_msgs.msg:String
-    topic_from: /echo
-    topic_to: echo
+    msg_type: ardrone_autonomy.msg:Navdata
+    topic_from: /ardrone/navdata
+    topic_to: mqttNavdataTopic
   - factory: mqtt_bridge.bridge:MqttToRosBridge
-    msg_type: std_msgs.msg:String
-    topic_from: echo
-    topic_to: /back
+    msg_type: ardrone_autonomy.msg:Navdata
+    topic_from: mqttNavdataTopic
+    topic_to: /tum_ardrone/navdata
   # private path
   - factory: mqtt_bridge.bridge:RosToMqttBridge
     msg_type: std_msgs.msg:String
