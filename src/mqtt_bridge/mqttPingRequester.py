@@ -30,8 +30,8 @@ def pingRequestFunction():
   mqttc.on_publish = on_publish
   mqttc.on_subscribe = on_subscribe
 # Connect
-  mqttc.connect("iot.eclipse.org", 1883,60)
-#  mqttc.connect("localhost", 1883,60)
+#  mqttc.connect("iot.eclipse.org", 1883,60)
+  mqttc.connect("localhost", 1883,60)
 
 # Start subscribe, with QoS level 0
   mqttc.subscribe("mqtt/pings/response", 0)
