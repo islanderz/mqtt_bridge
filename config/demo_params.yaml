@@ -1,4 +1,4 @@
-entqtt:
+mqtt:
   client:
     protocol: 4      # MQTTv311
   connection:
