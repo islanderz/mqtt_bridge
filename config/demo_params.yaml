@@ -1,4 +1,4 @@
-mqtt:
+entqtt:
   client:
     protocol: 4      # MQTTv311
   connection:
@@ -9,6 +9,15 @@ mqtt:
 serializer: msgpack:dumps
 deserializer: msgpack:loads
 bridge:
+  # ardrone/image_raw /tum_ardrone/image
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: sensor_msgs.msg:Image
+    topic_from: /ardrone/image_raw
+    topic_to: MQTTImageTopic
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: sensor_msgs.msg:Image
+    topic_from: MQTTImageTopic
+    topic_to: /tum_ardrone/image
   # ping pong
   - factory: mqtt_bridge.bridge:RosToMqttBridge
     msg_type: sensor_msgs.msg:Image
