@@ -1,0 +1,4 @@
+<launch>
+  <arg name="use_tls" default="false" />
+	<node name="PingRequest" pkg="mqtt_bridge" type="pingRequestNode.py" output="screen" />
+</launch>

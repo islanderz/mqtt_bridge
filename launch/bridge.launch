@@ -5,5 +5,4 @@
     <rosparam command="load" file="$(find mqtt_bridge)/config/demo_params.yaml" />
     <rosparam if="$(arg use_tls)" command="load" ns="mqtt" file="$(find mqtt_bridge)/config/tls_params.yaml" />
   </node>
-	<node name="PingRequest" pkg="mqtt_bridge" type="pingRequestNode.py" output="screen" />
 </launch>
