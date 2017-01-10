@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import datetime
 
+import rospy
 
 def on_connect(mosq, obj, rc):
     print("rc: " + str(rc))
@@ -23,15 +24,19 @@ def on_log(mosq, obj, level, string):
 
 
 def pingRequestFunction():   
+  rospy.init_node('pingRequestFunction');
   mqttc = mqtt.Client()
 # Assign event callbacks
   mqttc.on_message = on_message
   mqttc.on_connect = on_connect
   mqttc.on_publish = on_publish
   mqttc.on_subscribe = on_subscribe
+  broker = rospy.get_param("~broker","localhost");
+  brokerPort = rospy.get_param("~brokerPort",1883);
+
 # Connect
-#  mqttc.connect("iot.eclipse.org", 1883,60)
-  mqttc.connect("localhost", 1883,60)
+  mqttc.connect(broker, brokerPort,60)
+#  mqttc.connect("localhost", 1883,60)
 
 # Start subscribe, with QoS level 0
   mqttc.subscribe("mqtt/pings/response", 0)
@@ -41,6 +46,8 @@ def pingRequestFunction():
 
 # Continue the network loop, exit when an error occurs
   rc = 0
+  rospy.on_shutdown(mqttc.disconnect);
+  rospy.on_shutdown(mqttc.loop_stop)
   lastPublishedTime = datetime.datetime.now();
   while rc == 0:
     rc = mqttc.loop()

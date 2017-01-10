@@ -1,4 +1,6 @@
 <launch>
   <arg name="use_tls" default="false" />
-	<node name="PingResponse" pkg="mqtt_bridge" type="pingResponseNode.py" output="screen" />
+	<node name="PingResponse" pkg="mqtt_bridge" type="pingResponseNode.py" output="screen">
+  <param name="broker" value="iot.eclipse.org" />
+  </node>
 </launch>
